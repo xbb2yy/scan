@@ -41,7 +41,7 @@
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="所有号码" />
-            <ListView fx:id="all" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="all" prefHeight="200.0" prefWidth="250.0" />
             <Button alignment="CENTER" mnemonicParsing="false" text="清空">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
@@ -58,93 +58,46 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <VBox prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
-                                 <children>
-                                    <RadioButton mnemonicParsing="false" text="选择" />
-                                    <Label text="清空" />
-                                    <Label text="AAA">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <ListView fx:id="aaa" prefHeight="200.0" prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
-                                 <children>
-                                    <RadioButton mnemonicParsing="false" text="选择" />
-                                    <Label text="清空" />
-                                    <Label text="AAA">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <ListView prefHeight="200.0" prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
-                                 <children>
-                                    <RadioButton mnemonicParsing="false" text="选择" />
-                                    <Label text="清空" />
-                                    <Label text="AAA">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <ListView prefHeight="200.0" prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
-                                 <children>
-                                    <RadioButton mnemonicParsing="false" text="选择" />
-                                    <Label text="清空" />
-                                    <Label text="AAA">
-                                       <padding>
-                                          <Insets left="10.0" />
-                                       </padding>
-                                    </Label>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <ListView prefHeight="200.0" prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <VBox prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="选择" />
+                              <Label text="清空" />
+                              <Label text="AAA">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ListView prefHeight="200.0" prefWidth="200.0" fx:id="aaa"/>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="选择" />
+                              <Label text="清空" />
+                              <Label text="AAA">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ListView prefHeight="200.0" prefWidth="200.0"  fx:id="aaaa"/>
+                     </children>
+                  </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
@@ -171,6 +124,48 @@
                               <RadioButton mnemonicParsing="false" text="选择" />
                               <Label text="清空" />
                               <Label text="AAA">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="选择" />
+                              <Label text="清空" />
+                              <Label text="AAA">
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ListView fx:id="aaa1" prefHeight="200.0" prefWidth="200.0" />
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" text="选择" />
+                              <Label text="清空" />
+                              <Label text="AAAA">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>

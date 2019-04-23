@@ -54,6 +54,8 @@ public class Controller implements Initializable {
     private ListView all;
     @FXML
     private ListView aaa;
+    @FXML
+    private ListView aaaa;
 
 
     private final String uri = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
@@ -159,6 +161,14 @@ public class Controller implements Initializable {
                     if (matcher.find()) {
                         System.out.println("find it:" + n.toString());
                         aaa.getItems().add(n.toString());
+                    }
+
+                    // aaaa
+                    Pattern pattern1 = Pattern.compile("([\\d])\\1{3,}");
+                    Matcher matcher1 = pattern.matcher(n.toString());
+                    if (matcher1.find()) {
+                        System.out.println("find it:" + n.toString());
+                        aaaa.getItems().add(n.toString());
                     }
                 });
             } catch (IOException ex) {
