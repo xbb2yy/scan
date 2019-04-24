@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -207,9 +208,15 @@ public class Controller implements Initializable {
 
     @FXML
     private void clear(MouseEvent event) {
-        System.out.println(event.toString());
         Label label = (Label) event.getSource();
-        Node node = label.getLabelFor();
+        Parent parent = label.getParent().getParent();
+        ObservableList<Node> childrenUnmodifiable = parent.getChildrenUnmodifiable();
+        for (Node node : childrenUnmodifiable) {
+            if (node instanceof ListView) {
+                ((ListView) node).getItems().clear();
+            }
+        }
+
 
     }
 
@@ -217,7 +224,6 @@ public class Controller implements Initializable {
     private void clearAll(MouseEvent mouseEvent) {
         all.getItems().clear();
     }
-
     @FXML
     public void applyWangKa(ActionEvent event) {
         try {
