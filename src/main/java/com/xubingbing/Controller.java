@@ -14,9 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -57,11 +57,9 @@ public class Controller implements Initializable {
     @FXML
     private ListView all;
     @FXML
-    private ListView aaa;
+    private ListView aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8;
     @FXML
-    private ListView aaaa;
-    @FXML
-    private RadioButton aaaBtn;
+    private RadioButton aaaBtn, aaaBtn2, aaaBtn3, aaaBtn4, aaaBtn5, aaaBtn6, aaaBtn7, aaaBtn8;
     @FXML
     private TextField exclude;
 
@@ -75,7 +73,7 @@ public class Controller implements Initializable {
 
         // 初始化ListView
         ObservableList<String> items = FXCollections.observableArrayList(
-                "大王卡", "米粉卡", "星粉卡");
+                "大王卡", "米粉卡(待开发)", "星粉卡(待开发)");
         listView.setItems(items);
 
         // 初始化ChoiceBox
@@ -174,6 +172,9 @@ public class Controller implements Initializable {
                             }
                         }
                     }
+                    if (all.getItems().contains(n.toString())) {
+                        return;
+                    }
                     if (n.toString().length() == 11) {
                         Platform.runLater(() -> all.getItems().add(n.toString()));
                     }
@@ -184,20 +185,78 @@ public class Controller implements Initializable {
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
                             Platform.runLater(() -> aaa.getItems().add(n.toString()));
+
                         }
                     }
 
                     // aaaa
-                    Pattern pattern1 = Pattern.compile("([\\d])\\1{3,}");
-                    Matcher matcher1 = pattern1.matcher(n.toString());
-                    if (matcher1.find()) {
-                        Platform.runLater(() -> aaaa.getItems().add(n.toString()));
+                    if (aaaBtn2.isSelected()) {
+                        Pattern pattern = Pattern.compile("([\\d])\\1{3,}");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa2.getItems().add(n.toString()));
+                        }
                     }
+
+                    // AABBCC
+                    if (aaaBtn3.isSelected()) {
+                        Pattern pattern = Pattern.compile("(\\d)\\1((?!\\1)\\d)\\2((?!\\2)(?!\\1)\\d)\\3");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa3.getItems().add(n.toString()));
+                        }
+                    }
+
+                    // AABB
+                    if (aaaBtn4.isSelected()) {
+                        Pattern pattern = Pattern.compile("(\\d)\\1{1}((?!\\1)\\d)\\2{1}");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa4.getItems().add(n.toString()));
+                        }
+                    }
+
+                    // ABCDE
+                    if (aaaBtn5.isSelected()) {
+                        Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa5.getItems().add(n.toString()));
+                        }
+                    }
+
+                    // ABCCBA
+                    if (aaaBtn6.isSelected()) {
+                        Pattern pattern = Pattern.compile("(\\d)((?!\\2)\\d)((?!\\2)(?!\\3)\\d)\\3\\2\\1");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa6.getItems().add(n.toString()));
+                        }
+                    }
+
+                    // EDCBA
+                    if (aaaBtn7.isSelected()) {
+                        Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa7.getItems().add(n.toString()));
+                        }
+                    }
+
+                    // ABCD
+                    if (aaaBtn8.isSelected()) {
+                        Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> aaa8.getItems().add(n.toString()));
+                        }
+                    }
+
                 });
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }, 1, 5, TimeUnit.SECONDS);
+        }, 0, 5, TimeUnit.SECONDS);
 
     }
 
@@ -224,6 +283,7 @@ public class Controller implements Initializable {
     private void clearAll(MouseEvent mouseEvent) {
         all.getItems().clear();
     }
+
     @FXML
     public void applyWangKa(ActionEvent event) {
         try {

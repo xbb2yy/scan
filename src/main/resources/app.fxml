@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xubingbing.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xubingbing.Controller">
     <top>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0" BorderPane.alignment="CENTER">
             <children>
@@ -112,7 +112,7 @@
                            <children>
                               <RadioButton fx:id="aaaBtn2" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear2" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="4A+">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -131,7 +131,7 @@
                            <children>
                               <RadioButton fx:id="aaaBtn3" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear3" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="AABBCC">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -150,7 +150,7 @@
                            <children>
                               <RadioButton fx:id="aaaBtn4" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear4" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="AABB">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -169,7 +169,7 @@
                            <children>
                               <RadioButton fx:id="aaaBtn5" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear5" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="ABCDE">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -188,7 +188,7 @@
                            <children>
                               <RadioButton fx:id="aaaBtn6" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear6" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="ABCCBA">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -209,9 +209,9 @@
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="aaaBtn1" mnemonicParsing="false" selected="true" text="选择" />
+                              <RadioButton fx:id="aaaBtn7" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear1" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="EDCBA">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -221,16 +221,16 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView fx:id="aaa1" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="aaa7" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="aaaBtn21" mnemonicParsing="false" selected="true" text="选择" />
+                              <RadioButton fx:id="aaaBtn8" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear21" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="ABCD">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -240,7 +240,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView fx:id="aaa21" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="aaa8" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
