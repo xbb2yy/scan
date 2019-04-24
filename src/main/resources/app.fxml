@@ -25,12 +25,17 @@
                   <ChoiceBox fx:id="box2" prefWidth="150.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button  mnemonicParsing="false" onMouseClicked="#search" text="开始" />
-                        <Button fx:id="stop" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" opacity="0.86" text="停止" onAction="#stop" />
+                        <Button mnemonicParsing="false" onMouseClicked="#search" text="开始" />
+                        <Button fx:id="stop" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#stop" opacity="0.86" text="停止" />
                      </children>
                   </HBox>
                </children>
             </VBox>
+            <Button mnemonicParsing="false" prefHeight="96.0" prefWidth="167.0" text="王卡官网申请直达" textFill="#e33612" onAction="#applyWangka">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" />
@@ -41,8 +46,8 @@
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="所有号码" />
-            <ListView fx:id="all" prefHeight="200.0" prefWidth="250.0" />
-            <Button alignment="CENTER" mnemonicParsing="false" text="清空">
+            <ListView fx:id="all" prefHeight="200.0" prefWidth="400.0" />
+            <Button alignment="CENTER" mnemonicParsing="false" text="清空" onMouseClicked="#clearAll">
                <font>
                   <Font name="Monospaced Regular" size="12.0" />
                </font>
@@ -64,8 +69,8 @@
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton mnemonicParsing="false" text="选择" fx:id="aaaBtn" />
-                              <Label text="清空" fx:id="aaaClear" onMouseClicked="#clear" />
+                              <RadioButton fx:id="aaaBtn" mnemonicParsing="false" selected="true" text="选择" />
+                              <Label fx:id="aaaClear" onMouseClicked="#clear" text="清空" />
                               <Label text="AAA">
                                  <padding>
                                     <Insets left="10.0" />
@@ -76,7 +81,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView prefHeight="200.0" prefWidth="200.0" fx:id="aaa"/>
+                        <ListView fx:id="aaa" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
@@ -95,7 +100,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView prefHeight="200.0" prefWidth="200.0"  fx:id="aaaa"/>
+                        <ListView fx:id="aaaa" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">

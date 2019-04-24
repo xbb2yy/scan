@@ -3,6 +3,7 @@ package com.xubingbing;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -21,12 +23,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -151,7 +154,7 @@ public class Controller implements Initializable {
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
                 numArray.forEach(n -> {
                     if (n.toString().length() == 11) {
-                        all.getItems().add(n.toString());
+                        Platform.runLater(() -> all.getItems().add(n.toString()));
                     }
 
                     // aaa
@@ -159,17 +162,15 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("([\\d])\\1{2,}");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            aaa.getItems().add(n.toString());
+                            Platform.runLater(() -> aaa.getItems().add(n.toString()));
                         }
                     }
-
-
 
                     // aaaa
                     Pattern pattern1 = Pattern.compile("([\\d])\\1{3,}");
                     Matcher matcher1 = pattern1.matcher(n.toString());
                     if (matcher1.find()) {
-                        aaaa.getItems().add(n.toString());
+                        Platform.runLater(() -> aaaa.getItems().add(n.toString()));
                     }
                 });
             } catch (IOException ex) {
@@ -190,5 +191,21 @@ public class Controller implements Initializable {
         Label label = (Label) event.getSource();
         Node node = label.getLabelFor();
 
+    }
+
+    @FXML
+    private void clearAll(MouseEvent mouseEvent) {
+        all.getItems().clear();
+    }
+
+    @FXML
+    public void applyWangka(ActionEvent event) {
+        try {
+            Desktop.getDesktop().browse(new URI("http://www.baidu.com"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 }
