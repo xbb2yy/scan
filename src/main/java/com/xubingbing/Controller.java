@@ -49,15 +49,11 @@ public class Controller implements Initializable {
     private JSONObject proGroupNum;
 
     @FXML
-    private ListView listView;
-    @FXML
     private ChoiceBox<Province> box1;
     @FXML
     private ChoiceBox<City> box2;
     @FXML
-    private ListView all;
-    @FXML
-    private ListView aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8;
+    private ListView listView, all, aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8;
     @FXML
     private RadioButton aaaBtn, aaaBtn2, aaaBtn3, aaaBtn4, aaaBtn5, aaaBtn6, aaaBtn7, aaaBtn8;
     @FXML
