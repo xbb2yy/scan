@@ -10,12 +10,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,8 +28,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -59,6 +61,8 @@ public class Controller implements Initializable {
     private ListView aaaa;
     @FXML
     private RadioButton aaaBtn;
+    @FXML
+    private TextField exclude;
 
     // 任务是否启动
     private static volatile boolean start = true;
@@ -75,7 +79,7 @@ public class Controller implements Initializable {
 
         // 初始化ChoiceBox
         HttpGet httpGet = new HttpGet(uri);
-        try (CloseableHttpResponse response = httpclient.execute(httpGet)){
+        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             String s = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = JSONObject.parseObject(s);
 
@@ -116,6 +120,10 @@ public class Controller implements Initializable {
 
             // 请求需要Groupkey
             proGroupNum = jsonObject.getJSONObject("proGroupNum");
+
+            // 初始化提示
+            Tooltip tip = new Tooltip("输入数字,多个用空格分隔");
+            exclude.setTooltip(tip);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,7 +153,7 @@ public class Controller implements Initializable {
             while (!start) {
                 return;
             }
-            try(CloseableHttpResponse r = httpclient.execute(get)) {
+            try (CloseableHttpResponse r = httpclient.execute(get)) {
                 String string = EntityUtils.toString(r.getEntity());
                 StringBuilder sb = new StringBuilder(string);
                 sb.delete(0, 20);
@@ -153,12 +161,24 @@ public class Controller implements Initializable {
                 System.out.println(sb);
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
                 numArray.forEach(n -> {
+                    String num = n.toString();
+                    String excludeText = exclude.getText();
+                    String[] s = excludeText.split(" ");
+                    for (String s1 : s) {
+                        boolean numeric = Util.isNumeric(s1);
+                        if (numeric) {
+                            System.out.println("不包含:" + excludeText);
+                            if (num.contains(s1)) {
+                                return;
+                            }
+                        }
+                    }
                     if (n.toString().length() == 11) {
                         Platform.runLater(() -> all.getItems().add(n.toString()));
                     }
 
                     // aaa
-                    if(aaaBtn.isSelected()) {
+                    if (aaaBtn.isSelected()) {
                         Pattern pattern = Pattern.compile("([\\d])\\1{2,}");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
@@ -199,7 +219,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    public void applyWangka(ActionEvent event) {
+    public void applyWangKa(ActionEvent event) {
         try {
             Desktop.getDesktop().browse(new URI("http://www.baidu.com"));
         } catch (IOException e) {
