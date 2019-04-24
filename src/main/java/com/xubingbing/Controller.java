@@ -8,12 +8,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -34,6 +35,7 @@ import java.util.regex.Pattern;
 
 public class Controller implements Initializable {
 
+
     protected static Map<String, Province> provinceMap = new HashMap<>();
     protected static Map<String, City> cityMap = new HashMap<>();
     private CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -47,16 +49,16 @@ public class Controller implements Initializable {
     @FXML
     private ChoiceBox<City> box2;
     @FXML
-    private Button start;
-    @FXML
-    private Button stop;
-    @FXML
     private ListView all;
     @FXML
     private ListView aaa;
     @FXML
     private ListView aaaa;
+    @FXML
+    private RadioButton aaaBtn;
 
+    // 任务是否启动
+    private static volatile boolean start = true;
 
     private final String uri = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
 
@@ -70,8 +72,7 @@ public class Controller implements Initializable {
 
         // 初始化ChoiceBox
         HttpGet httpGet = new HttpGet(uri);
-        try {
-            CloseableHttpResponse response = httpclient.execute(httpGet);
+        try (CloseableHttpResponse response = httpclient.execute(httpGet)){
             String s = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = JSONObject.parseObject(s);
 
@@ -110,10 +111,8 @@ public class Controller implements Initializable {
             box2.setItems(FXCollections.observableArrayList(cities));
             box2.getSelectionModel().selectFirst();
 
-
             // 请求需要Groupkey
             proGroupNum = jsonObject.getJSONObject("proGroupNum");
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,6 +120,7 @@ public class Controller implements Initializable {
 
     @FXML
     private void search() {
+        start = true;
         ReadOnlyObjectProperty<Province> property = box1.getSelectionModel().selectedItemProperty();
         Integer provinceCode = property.getValue().getPROVINCE_CODE();
         Integer cityCode = box2.getSelectionModel().selectedItemProperty().getValue().getCITY_CODE();
@@ -139,10 +139,10 @@ public class Controller implements Initializable {
                 "?product=4&channel=1306");
 
         service.scheduleWithFixedDelay(() -> {
-            CloseableHttpResponse r = null;
-
-            try {
-                r = httpclient.execute(get);
+            while (!start) {
+                return;
+            }
+            try(CloseableHttpResponse r = httpclient.execute(get)) {
                 String string = EntityUtils.toString(r.getEntity());
                 StringBuilder sb = new StringBuilder(string);
                 sb.delete(0, 20);
@@ -151,38 +151,44 @@ public class Controller implements Initializable {
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
                 numArray.forEach(n -> {
                     if (n.toString().length() == 11) {
-                        //System.out.println(all);
                         all.getItems().add(n.toString());
-                        //  all.appendText(n.toString() + "\n");
                     }
+
                     // aaa
-                    Pattern pattern = Pattern.compile("([\\d])\\1{2,}");
-                    Matcher matcher = pattern.matcher(n.toString());
-                    if (matcher.find()) {
-                        System.out.println("find it:" + n.toString());
-                        aaa.getItems().add(n.toString());
+                    if(aaaBtn.isSelected()) {
+                        Pattern pattern = Pattern.compile("([\\d])\\1{2,}");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            aaa.getItems().add(n.toString());
+                        }
                     }
+
+
 
                     // aaaa
                     Pattern pattern1 = Pattern.compile("([\\d])\\1{3,}");
-                    Matcher matcher1 = pattern.matcher(n.toString());
+                    Matcher matcher1 = pattern1.matcher(n.toString());
                     if (matcher1.find()) {
-                        System.out.println("find it:" + n.toString());
                         aaaa.getItems().add(n.toString());
                     }
                 });
             } catch (IOException ex) {
                 ex.printStackTrace();
-            } finally {
-                if (r != null) {
-                    try {
-                        r.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
             }
         }, 1, 5, TimeUnit.SECONDS);
+
+    }
+
+    @FXML
+    private void stop() {
+        start = false;
+    }
+
+    @FXML
+    private void clear(MouseEvent event) {
+        System.out.println(event.toString());
+        Label label = (Label) event.getSource();
+        Node node = label.getLabelFor();
 
     }
 }

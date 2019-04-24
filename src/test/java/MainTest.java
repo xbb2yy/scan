@@ -1,3 +1,7 @@
+import org.junit.Test;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,5 +21,14 @@ public class MainTest {
         System.out.println(matcher1.find());
         System.out.println(matcher2.find());
         System.out.println(matcher3.find());
+    }
+
+    @Test
+    public void test() {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        executorService.shutdown();
+
+
+        executorService.execute(() -> System.out.println(1));
     }
 }
