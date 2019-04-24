@@ -41,7 +41,6 @@ import java.util.regex.Pattern;
 
 public class Controller implements Initializable {
 
-
     protected static Map<String, Province> provinceMap = new HashMap<>();
     protected static Map<String, City> cityMap = new HashMap<>();
     private CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -61,9 +60,7 @@ public class Controller implements Initializable {
 
     // 任务是否启动
     private static volatile boolean start = true;
-
     private final String uri = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
-
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -232,7 +229,7 @@ public class Controller implements Initializable {
 
                     // EDCBA
                     if (aaaBtn7.isSelected()) {
-                        Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
+                        Pattern pattern = Pattern.compile("^\\d(?:(?:0(?=9)|9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){3,})\\d");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
                             Platform.runLater(() -> aaa7.getItems().add(n.toString()));
@@ -276,7 +273,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void clearAll(MouseEvent mouseEvent) {
+    private void clearAll() {
         all.getItems().clear();
     }
 

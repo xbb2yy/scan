@@ -34,6 +34,25 @@ public class MainTest {
 
         Matcher matcher2 = pattern.matcher("122456");
         System.out.println(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("1265432");
+        System.out.println(matcher3.find());
+    }
+
+    @Test
+    public void edcba() {
+        Pattern pattern = Pattern.compile("^\\d(?:(?:0(?=9)|9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){3,})\\d");
+        Matcher matcher = pattern.matcher("87654");
+        System.out.println(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("13123454345");
+        System.out.println(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("122456");
+        System.out.println(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("654321");
+        System.out.println(matcher3.find());
     }
 
     @Test
