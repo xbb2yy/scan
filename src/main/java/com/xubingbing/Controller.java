@@ -53,7 +53,9 @@ public class Controller implements Initializable {
     @FXML
     private ChoiceBox<City> box2;
     @FXML
-    private ListView listView, all, aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8, aaa9, aaa10, aaa11, aaa12;
+    private ListView<String> listView;
+    @FXML
+    private ListView all, aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8, aaa9, aaa10, aaa11, aaa12;
     @FXML
     private RadioButton aaaBtn, aaaBtn2, aaaBtn3, aaaBtn4, aaaBtn5, aaaBtn6, aaaBtn7, aaaBtn8, aaaBtn9, aaaBtn10,
             aaaBtn11, aaaBtn12;
@@ -63,6 +65,7 @@ public class Controller implements Initializable {
     // 任务是否启动
     private static volatile boolean start = true;
     private final String uri = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
+    private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=0";
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -126,6 +129,17 @@ public class Controller implements Initializable {
 
     @FXML
     private void search() {
+        String selectedItem = listView.getSelectionModel().getSelectedItem();
+        switch (selectedItem) {
+            case "大王卡":
+                break;
+            case "米粉卡":
+                break;
+            case "星粉卡":
+                break;
+            default:
+        }
+
         start = true;
         ReadOnlyObjectProperty<Province> property = box1.getSelectionModel().selectedItemProperty();
         Integer provinceCode = property.getValue().getPROVINCE_CODE();
