@@ -29,16 +29,15 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.xubingbing.Patterns.abcdabcd;
+import static com.xubingbing.Patterns.*;
 
 public class Controller implements Initializable {
 
@@ -183,139 +182,31 @@ public class Controller implements Initializable {
                     }
 
                     // AAA
-                    if (aaaBtn.isSelected()) {
-                        Pattern pattern = Pattern.compile("([\\d])\\1{2,}");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa.getItems().add(n.toString());
-                                aaa.scrollTo(aaa.getItems().size());
-                            });
-
-                        }
-                    }
-
+                    process(aaaBtn, a3, aaa, num);
                     // 4A+
-                    if (aaaBtn2.isSelected()) {
-                        Pattern pattern = Pattern.compile("([\\d])\\1{3,}");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa2.getItems().add(n.toString());
-                                aaa2.scrollTo(aaa2.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn2, a4p, aaa2, num);
                     // AABBCC
-                    if (aaaBtn3.isSelected()) {
-                        Pattern pattern = Pattern.compile("(\\d)\\1((?!\\1)\\d)\\2((?!\\2)(?!\\1)\\d)\\3");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa3.getItems().add(n.toString());
-                                aaa3.scrollTo(aaa3.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn3, aabbcc, aaa3, num);
                     // AABB
-                    if (aaaBtn4.isSelected()) {
-                        Pattern pattern = Pattern.compile("(\\d)\\1{1}((?!\\1)\\d)\\2{1}");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa4.getItems().add(n.toString());
-                                aaa4.scrollTo(aaa4.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn4, aabb, aaa4, num);
                     // ABCDE
-                    if (aaaBtn5.isSelected()) {
-                        Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa5.getItems().add(n.toString());
-                                aaa5.scrollTo(aaa5.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn5, abcde, aaa5, num);
                     // ABCCBA
-                    if (aaaBtn6.isSelected()) {
-                        Pattern pattern = Pattern.compile("(\\d)((?!\\2)\\d)((?!\\2)(?!\\3)\\d)\\3\\2\\1");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa6.getItems().add(n.toString());
-                                aaa6.scrollTo(aaa6.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn6, abccba, aaa6, num);
                     // EDCBA
-                    if (aaaBtn7.isSelected()) {
-                        Pattern pattern = Pattern.compile("^\\d(?:(?:0(?=9)|9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){3,})\\d");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa7.getItems().add(n.toString());
-                                aaa7.scrollTo(aaa7.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn7, edcba, aaa7, num);
                     // ABCD
-                    if (aaaBtn8.isSelected()) {
-                        Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa8.getItems().add(n.toString());
-                                aaa8.scrollTo(aaa8.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn8, abcd, aaa8, num);
                     // ABCDABCD
-                    if (aaaBtn9.isSelected()) {
-                        Matcher matcher = abcdabcd.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa9.getItems().add(n.toString());
-                                aaa9.scrollTo(aaa9.getItems().size());
-                            });
-                        }
-                    }
+                    process(aaaBtn9, abcdabcd, aaa9, num);
                     // 只出现三个不同数字
-                    if (aaaBtn10.isSelected()) {
-                        Pattern pattern = Pattern.compile("^(?=(\\d)\\1*(\\d)(?:\\1|\\2)*(\\d)(?:\\1|\\2|\\3)*$)\\d{11}$");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa10.getItems().add(n.toString());
-                                aaa10.scrollTo(aaa10.getItems().size());
-                            });
-                        }
-                    }
-
+                    process(aaaBtn10, less3, aaa10, num);
                     // 相同数字超过5次
-                    if (aaaBtn11.isSelected()) {
-                        Pattern pattern = Pattern.compile("^(?=\\d*(\\d)\\d*(?:\\1\\d*){4})\\d{11}$\n");
-                        Matcher matcher = pattern.matcher(n.toString());
-                        if (matcher.find()) {
-                            Platform.runLater(() -> {
-                                aaa11.getItems().add(n.toString());
-                                aaa11.scrollTo(aaa11.getItems().size());
-                            });
-                        }
-                    }
+                    process(aaaBtn11, one5s, aaa11, num);
                     // Custom
                     if (aaaBtn12.isSelected()) {
                         String str = custom.getText();
-                        if (null == str || str.trim() =="" || str.length() == 0) {
+                        if (null == str || str.trim() == "" || str.length() == 0) {
                             return;
                         }
                         try {
@@ -373,6 +264,19 @@ public class Controller implements Initializable {
             e.printStackTrace();
         } catch (URISyntaxException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void process(RadioButton btn, Pattern p, ListView listView, String string) {
+        if (btn.isSelected()) {
+            Matcher matcher = p.matcher(string);
+            if (matcher.find()) {
+                Platform.runLater(() -> {
+                    listView.getItems().add(string);
+                    listView.scrollTo(listView.getItems().size());
+                });
+
+            }
         }
     }
 
