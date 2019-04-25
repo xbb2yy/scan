@@ -137,7 +137,7 @@ public class MainTest {
         assertTrue(matcher5.find());
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void test() {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.shutdown();

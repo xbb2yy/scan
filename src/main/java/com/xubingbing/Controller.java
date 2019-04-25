@@ -201,7 +201,7 @@ public class Controller implements Initializable {
                     process(aaaBtn9, abcdabcd, aaa9, num);
                     // 只出现三个不同数字
                     process(aaaBtn10, less3, aaa10, num);
-                    // 相同数字超过5次
+                    // 同一数字超过5次
                     process(aaaBtn11, one5s, aaa11, num);
                     // Custom
                     if (aaaBtn12.isSelected()) {
@@ -211,13 +211,7 @@ public class Controller implements Initializable {
                         }
                         try {
                             Pattern pattern = Pattern.compile(str);
-                            Matcher matcher = pattern.matcher(n.toString());
-                            if (matcher.find()) {
-                                Platform.runLater(() -> {
-                                    aaa12.getItems().add(n.toString());
-                                    aaa12.scrollTo(aaa12.getItems().size());
-                                });
-                            }
+                            process(aaaBtn12, pattern, aaa12, num);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

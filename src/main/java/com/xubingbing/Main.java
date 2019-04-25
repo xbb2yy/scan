@@ -18,4 +18,8 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/ico.jpg")));
         primaryStage.show();
     }
+
+    public static void main(String[] args) throws Exception{
+       launch(args);
+    }
 }
