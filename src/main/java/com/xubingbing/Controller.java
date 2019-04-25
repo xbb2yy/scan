@@ -132,10 +132,8 @@ public class Controller implements Initializable {
         String selectedItem = listView.getSelectionModel().getSelectedItem();
         switch (selectedItem) {
             case "大王卡":
-                break;
-            case "米粉卡":
-                break;
             case "星粉卡":
+            case "米粉卡":
                 break;
             default:
         }
