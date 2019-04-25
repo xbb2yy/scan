@@ -39,6 +39,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.xubingbing.Patterns.abcdabcd;
+
 public class Controller implements Initializable {
 
     protected static Map<String, Province> provinceMap = new HashMap<>();
@@ -52,15 +54,17 @@ public class Controller implements Initializable {
     @FXML
     private ChoiceBox<City> box2;
     @FXML
-    private ListView listView, all, aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8;
+    private ListView listView, all, aaa, aaa2, aaa3, aaa4, aaa5, aaa6, aaa7, aaa8, aaa9, aaa10, aaa11, aaa12;
     @FXML
-    private RadioButton aaaBtn, aaaBtn2, aaaBtn3, aaaBtn4, aaaBtn5, aaaBtn6, aaaBtn7, aaaBtn8;
+    private RadioButton aaaBtn, aaaBtn2, aaaBtn3, aaaBtn4, aaaBtn5, aaaBtn6, aaaBtn7, aaaBtn8, aaaBtn9, aaaBtn10,
+            aaaBtn11, aaaBtn12;
     @FXML
-    private TextField exclude;
+    private TextField exclude, custom;
 
     // 任务是否启动
     private static volatile boolean start = true;
     private final String uri = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
+
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -169,25 +173,34 @@ public class Controller implements Initializable {
                         return;
                     }
                     if (n.toString().length() == 11) {
-                        Platform.runLater(() -> all.getItems().add(n.toString()));
+                        Platform.runLater(() -> {
+                            all.getItems().add(n.toString());
+                            all.scrollTo(all.getItems().size());
+                        });
                     }
 
-                    // aaa
+                    // AAA
                     if (aaaBtn.isSelected()) {
                         Pattern pattern = Pattern.compile("([\\d])\\1{2,}");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa.getItems().add(n.toString());
+                                aaa.scrollTo(aaa.getItems().size());
+                            });
 
                         }
                     }
 
-                    // aaaa
+                    // 4A+
                     if (aaaBtn2.isSelected()) {
                         Pattern pattern = Pattern.compile("([\\d])\\1{3,}");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa2.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa2.getItems().add(n.toString());
+                                aaa2.scrollTo(aaa2.getItems().size());
+                            });
                         }
                     }
 
@@ -196,7 +209,10 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("(\\d)\\1((?!\\1)\\d)\\2((?!\\2)(?!\\1)\\d)\\3");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa3.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa3.getItems().add(n.toString());
+                                aaa3.scrollTo(aaa3.getItems().size());
+                            });
                         }
                     }
 
@@ -205,7 +221,10 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("(\\d)\\1{1}((?!\\1)\\d)\\2{1}");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa4.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa4.getItems().add(n.toString());
+                                aaa4.scrollTo(aaa4.getItems().size());
+                            });
                         }
                     }
 
@@ -214,7 +233,10 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa5.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa5.getItems().add(n.toString());
+                                aaa5.scrollTo(aaa5.getItems().size());
+                            });
                         }
                     }
 
@@ -223,7 +245,10 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("(\\d)((?!\\2)\\d)((?!\\2)(?!\\3)\\d)\\3\\2\\1");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa6.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa6.getItems().add(n.toString());
+                                aaa6.scrollTo(aaa6.getItems().size());
+                            });
                         }
                     }
 
@@ -232,7 +257,10 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("^\\d(?:(?:0(?=9)|9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){3,})\\d");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa7.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa7.getItems().add(n.toString());
+                                aaa7.scrollTo(aaa7.getItems().size());
+                            });
                         }
                     }
 
@@ -241,7 +269,63 @@ public class Controller implements Initializable {
                         Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){3}\\d");
                         Matcher matcher = pattern.matcher(n.toString());
                         if (matcher.find()) {
-                            Platform.runLater(() -> aaa8.getItems().add(n.toString()));
+                            Platform.runLater(() -> {
+                                aaa8.getItems().add(n.toString());
+                                aaa8.scrollTo(aaa8.getItems().size());
+                            });
+                        }
+                    }
+
+                    // ABCDABCD
+                    if (aaaBtn9.isSelected()) {
+                        Matcher matcher = abcdabcd.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> {
+                                aaa9.getItems().add(n.toString());
+                                aaa9.scrollTo(aaa9.getItems().size());
+                            });
+                        }
+                    }
+                    // 只出现三个不同数字
+                    if (aaaBtn10.isSelected()) {
+                        Pattern pattern = Pattern.compile("^(?=(\\d)\\1*(\\d)(?:\\1|\\2)*(\\d)(?:\\1|\\2|\\3)*$)\\d{11}$");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> {
+                                aaa10.getItems().add(n.toString());
+                                aaa10.scrollTo(aaa10.getItems().size());
+                            });
+                        }
+                    }
+
+                    // 相同数字超过5次
+                    if (aaaBtn11.isSelected()) {
+                        Pattern pattern = Pattern.compile("^(?=\\d*(\\d)\\d*(?:\\1\\d*){4})\\d{11}$\n");
+                        Matcher matcher = pattern.matcher(n.toString());
+                        if (matcher.find()) {
+                            Platform.runLater(() -> {
+                                aaa11.getItems().add(n.toString());
+                                aaa11.scrollTo(aaa11.getItems().size());
+                            });
+                        }
+                    }
+                    // Custom
+                    if (aaaBtn12.isSelected()) {
+                        String str = custom.getText();
+                        if (null == str || str.trim() =="" || str.length() == 0) {
+                            return;
+                        }
+                        try {
+                            Pattern pattern = Pattern.compile(str);
+                            Matcher matcher = pattern.matcher(n.toString());
+                            if (matcher.find()) {
+                                Platform.runLater(() -> {
+                                    aaa12.getItems().add(n.toString());
+                                    aaa12.scrollTo(aaa12.getItems().size());
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
 
@@ -249,7 +333,7 @@ public class Controller implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }, 0, 5, TimeUnit.SECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
 
     }
 
@@ -287,4 +371,5 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
     }
+
 }

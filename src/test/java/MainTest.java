@@ -1,9 +1,13 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class MainTest {
 
@@ -27,7 +31,6 @@ public class MainTest {
     public void abcde() {
         Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
         Matcher matcher = pattern.matcher("123456");
-        System.out.println(matcher.find());
 
         Matcher matcher1 = pattern.matcher("13123454345");
         System.out.println(matcher1.find());
@@ -56,36 +59,88 @@ public class MainTest {
     }
 
     @Test
+    public void abcdabcd() {
+        Pattern pattern = Pattern.compile("(\\d)(\\d)(\\d)(\\d)\\1\\2\\3\\4");
+
+
+        Matcher matcher = pattern.matcher("153123412343");
+        assertTrue(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("131234123454345");
+        assertTrue(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("122456");
+        assertFalse(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("654321");
+        assertFalse(matcher3.find());
+    }
+
+    @Test
+    public void unique3() {
+        Pattern pattern = Pattern.compile("^(?=(\\d)\\1*(\\d)(?:\\1|\\2)*(\\d)(?:\\1|\\2|\\3)*$)\\d{11}$");
+
+
+        Matcher matcher = pattern.matcher("153123412343");
+        assertFalse(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("13123452345");
+        assertFalse(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("13133113133");
+        assertTrue(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("18989898989");
+       assertTrue(matcher3.find());
+    }
+
+    @Test
+    public void n5() {
+        Pattern pattern = Pattern.compile("^(?=\\d*(\\d)\\d*(?:\\1\\d*){4})\\d{11}$");
+
+
+        Matcher matcher = pattern.matcher("153123412343");
+        assertFalse(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("13123452345");
+        assertFalse(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("13133113133");
+        assertTrue(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("18989898989");
+        assertTrue(matcher3.find());
+
+        Matcher matcher4 = pattern.matcher("15313332339");
+        assertTrue(matcher4.find());
+    }
+
+    @Test
     public void aaabbb() {
         Pattern pattern = Pattern.compile("(\\d)\\1{2}((?!\\1)\\d)\\2{2}");
         Matcher matcher = pattern.matcher("123456");
-        System.out.println(matcher.find());
+        assertFalse(matcher.find());
 
         Matcher matcher1 = pattern.matcher("13123454345");
-        System.out.println(matcher1.find());
+        assertFalse(matcher1.find());
 
         Matcher matcher2 = pattern.matcher("122456");
-        System.out.println(matcher2.find());
+        assertFalse(matcher2.find());
 
         Matcher matcher3 = pattern.matcher("122244456");
-        System.out.println(matcher3.find());
+        assertTrue(matcher3.find());
 
         Matcher matcher4 = pattern.matcher("22244456");
-        System.out.println(matcher4.find());
+        assertTrue(matcher4.find());
 
         Matcher matcher5 = pattern.matcher("2222444555666");
-        System.out.println(matcher5.find());
+        assertTrue(matcher5.find());
     }
-
-
-
 
     @Test
     public void test() {
         ExecutorService executorService = Executors.newFixedThreadPool(10);
         executorService.shutdown();
-
-
         executorService.execute(() -> System.out.println(1));
     }
 }

@@ -52,6 +52,22 @@
                                 <Insets top="100.0" />
                             </opaqueInsets>
                         </HBox>
+                  <HBox spacing="20.0">
+                     <children>
+                        <Label prefHeight="15.0" prefWidth="46.0" text="自定义">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="custom" prefHeight="23.0" prefWidth="62.0"/>
+                     </children>
+                     <opaqueInsets>
+                        <Insets top="100.0" />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
                     </children>
                     <opaqueInsets>
                         <Insets />
@@ -247,9 +263,9 @@
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="aaaBtn31" mnemonicParsing="false" selected="true" text="选择" />
+                              <RadioButton fx:id="aaaBtn9" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear31" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="ABCDABCD">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -259,16 +275,16 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView fx:id="aaa31" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="aaa9" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="aaaBtn41" mnemonicParsing="false" selected="true" text="选择" />
+                              <RadioButton fx:id="aaaBtn10" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear41" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="最多三个不同数字">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -278,16 +294,16 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView fx:id="aaa41" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="aaa10" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="aaaBtn51" mnemonicParsing="false" selected="true" text="选择" />
+                              <RadioButton fx:id="aaaBtn11" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear51" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="同一数字超过5次">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -297,16 +313,16 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView fx:id="aaa51" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="aaa11" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="30.0" prefWidth="300.0" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="aaaBtn61" mnemonicParsing="false" selected="true" text="选择" />
+                              <RadioButton fx:id="aaaBtn12" mnemonicParsing="false" selected="true" text="选择" />
                               <Label fx:id="aaaClear61" onMouseClicked="#clear" text="清空" />
-                              <Label text="AAA">
+                              <Label text="自定义">
                                  <padding>
                                     <Insets left="10.0" />
                                  </padding>
@@ -316,7 +332,7 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </HBox>
-                        <ListView fx:id="aaa61" prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="aaa12" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </VBox>
                </children>
