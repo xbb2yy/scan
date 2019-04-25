@@ -29,13 +29,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +47,7 @@ public class Controller implements Initializable {
     private CloseableHttpClient httpclient = HttpClients.createDefault();
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     private JSONObject proGroupNum;
+    private LinkedHashSet<String> allNums = new LinkedHashSet<>();
 
     @FXML
     private ChoiceBox<Province> box1;
@@ -157,6 +157,9 @@ public class Controller implements Initializable {
                 System.out.println(sb);
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
                 numArray.forEach(n -> {
+                    if (n.toString().length() == 11) {
+                        allNums.add(n.toString());
+                    }
                     String num = n.toString();
                     String excludeText = exclude.getText();
                     String[] s = excludeText.split(" ");
@@ -330,6 +333,7 @@ public class Controller implements Initializable {
                     }
 
                 });
+                System.out.println(allNums.size());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
