@@ -167,69 +167,7 @@ public class Controller implements Initializable {
                 sb.deleteCharAt(sb.length() - 1);
                 System.out.println(sb);
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
-                numArray.forEach(n -> {
-                    if (n.toString().length() == 11) {
-                        allNums.add(n.toString());
-                    }
-                    String num = n.toString();
-                    String excludeText = exclude.getText();
-                    String[] s = excludeText.split(" ");
-                    for (String s1 : s) {
-                        boolean numeric = Util.isNumeric(s1);
-                        if (numeric) {
-                            System.out.println("不包含:" + excludeText);
-                            if (num.contains(s1)) {
-                                return;
-                            }
-                        }
-                    }
-                    if (all.getItems().contains(n.toString())) {
-                        return;
-                    }
-                    if (n.toString().length() == 11) {
-                        Platform.runLater(() -> {
-                            all.getItems().add(n.toString());
-                            all.scrollTo(all.getItems().size());
-                        });
-                    }
-
-                    // AAA
-                    process(aaaBtn, a3, aaa, num);
-                    // 4A+
-                    process(aaaBtn2, a4p, aaa2, num);
-                    // AABBCC
-                    process(aaaBtn3, aabbcc, aaa3, num);
-                    // AABB
-                    process(aaaBtn4, aabb, aaa4, num);
-                    // ABCDE
-                    process(aaaBtn5, abcde, aaa5, num);
-                    // ABCCBA
-                    process(aaaBtn6, abccba, aaa6, num);
-                    // EDCBA
-                    process(aaaBtn7, edcba, aaa7, num);
-                    // ABCD
-                    process(aaaBtn8, abcd, aaa8, num);
-                    // ABCDABCD
-                    process(aaaBtn9, abcdabcd, aaa9, num);
-                    // 只出现三个不同数字
-                    process(aaaBtn10, less3, aaa10, num);
-                    // 同一数字超过5次
-                    process(aaaBtn11, one5s, aaa11, num);
-                    // Custom
-                    if (aaaBtn12.isSelected()) {
-                        String str = custom.getText();
-                        if (null == str || str.trim() == "" || str.length() == 0) {
-                            return;
-                        }
-                        try {
-                            Pattern pattern = Pattern.compile(str);
-                            process(aaaBtn12, pattern, aaa12, num);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                });
+                numArray.forEach(this::accept);
                 System.out.println(allNums.size());
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -286,4 +224,66 @@ public class Controller implements Initializable {
         }
     }
 
+    private void accept(Object n) {
+        if (n.toString().length() == 11) {
+            allNums.add(n.toString());
+        }
+        String num = n.toString();
+        String excludeText = exclude.getText();
+        String[] s = excludeText.split(" ");
+        for (String s1 : s) {
+            boolean numeric = Util.isNumeric(s1);
+            if (numeric) {
+                System.out.println("不包含:" + excludeText);
+                if (num.contains(s1)) {
+                    return;
+                }
+            }
+        }
+        if (all.getItems().contains(n.toString())) {
+            return;
+        }
+        if (n.toString().length() == 11) {
+            Platform.runLater(() -> {
+                all.getItems().add(n.toString());
+                all.scrollTo(all.getItems().size());
+            });
+        }
+
+        // AAA
+        process(aaaBtn, a3, aaa, num);
+        // 4A+
+        process(aaaBtn2, a4p, aaa2, num);
+        // AABBCC
+        process(aaaBtn3, aabbcc, aaa3, num);
+        // AABB
+        process(aaaBtn4, aabb, aaa4, num);
+        // ABCDE
+        process(aaaBtn5, abcde, aaa5, num);
+        // ABCCBA
+        process(aaaBtn6, abccba, aaa6, num);
+        // EDCBA
+        process(aaaBtn7, edcba, aaa7, num);
+        // ABCD
+        process(aaaBtn8, abcd, aaa8, num);
+        // ABCDABCD
+        process(aaaBtn9, abcdabcd, aaa9, num);
+        // 只出现三个不同数字
+        process(aaaBtn10, less3, aaa10, num);
+        // 同一数字超过5次
+        process(aaaBtn11, one5s, aaa11, num);
+        // Custom
+        if (aaaBtn12.isSelected()) {
+            String str = custom.getText();
+            if (null == str || str.trim() == "" || str.length() == 0) {
+                return;
+            }
+            try {
+                Pattern pattern = Pattern.compile(str);
+                process(aaaBtn12, pattern, aaa12, num);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
