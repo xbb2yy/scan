@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xubingbing.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="980.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xubingbing.Controller">
     <top>
         <HBox prefHeight="100.0" prefWidth="200.0" spacing="25.0" BorderPane.alignment="CENTER">
             <children>
@@ -59,7 +65,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="custom" prefHeight="23.0" prefWidth="62.0"/>
+                        <TextField fx:id="custom" prefHeight="23.0" prefWidth="62.0" />
                      </children>
                      <opaqueInsets>
                         <Insets top="100.0" />
@@ -73,6 +79,7 @@
                         <Insets />
                     </opaqueInsets>
                 </VBox>
+            <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="82.0" text="说明" onAction="#desc" />
             </children>
             <BorderPane.margin>
                 <Insets bottom="10.0" />
