@@ -74,6 +74,7 @@ public class Controller implements Initializable {
         ObservableList<String> items = FXCollections.observableArrayList(
                 "大王卡", "米粉卡(待开发)", "星粉卡(待开发)");
         listView.setItems(items);
+        listView.getSelectionModel().selectFirst();
 
         // 初始化ChoiceBox
         HttpGet httpGet = new HttpGet(uri);
@@ -293,7 +294,5 @@ public class Controller implements Initializable {
         alert.setOnCloseRequest(event ->{
             alert.close();
         });
-
-
     }
 }
