@@ -41,8 +41,8 @@ import static com.xubingbing.Patterns.*;
 
 public class Controller implements Initializable {
 
-    protected static Map<String, Province> provinceMap = new HashMap<>();
-    protected static Map<String, City> cityMap = new HashMap<>();
+    static Map<String, Province> provinceMap = new HashMap<>();
+    static Map<String, City> cityMap = new HashMap<>();
     private CloseableHttpClient httpclient = HttpClients.createDefault();
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     private JSONObject proGroupNum;
