@@ -79,7 +79,7 @@
                         <Insets />
                     </opaqueInsets>
                 </VBox>
-            <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="82.0" text="说明" onAction="#desc" />
+            <Button mnemonicParsing="false" onAction="#desc" prefHeight="23.0" prefWidth="82.0" text="说明" />
             </children>
             <BorderPane.margin>
                 <Insets bottom="10.0" />
