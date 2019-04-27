@@ -290,10 +290,13 @@ public class Controller implements Initializable {
 
     @FXML
     public void desc(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setContentText("hello");
-        Button source = (Button) actionEvent.getSource();
         alert.show();
+        alert.setOnCloseRequest(event ->{
+            alert.close();
+        });
+
 
     }
 }
