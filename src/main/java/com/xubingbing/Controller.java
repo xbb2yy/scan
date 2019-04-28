@@ -45,11 +45,14 @@ public class Controller implements Initializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(Controller.class);
     static Map<String, Province> provinceMap = new HashMap<>();
+    static Map<Province, List<City>> provinceCity = new HashMap<>();
     static Map<String, City> cityMap = new HashMap<>();
     private CloseableHttpClient httpclient = HttpClients.createDefault();
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     private JSONObject proGroupNum;
     private LinkedHashSet<String> allNums = new LinkedHashSet<>();
+    private final String queryUrlFormat = "https://m.10010.com/NumApp/NumberCenter/qryNum?callback=jsonp_queryMoreNums&provinceCode=%s" +
+            "&cityCode=%s&monthFeeLimit=0&groupKey=%s&searchCategory=3&net=01&amounts=200&codeTypeCode=&searchValue=&qryType=02&goodsNet=4&_=%s";
 
     @FXML
     private ChoiceBox<Province> box1;
@@ -67,7 +70,7 @@ public class Controller implements Initializable {
 
     // 任务是否启动
     private static volatile boolean start = true;
-    private static volatile boolean allCity = false;
+    private static volatile boolean allCity = true;
     private final String wang = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
     private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=1";
     private final String ali = "https://m.10010.com/king/kingNumCard/alibaoinit?product=1";
@@ -94,7 +97,12 @@ public class Controller implements Initializable {
             List<Province> provinces = JSON.parseArray(provinceData, Province.class);
             provinces.forEach(p -> {
                 provinceMap.put(p.getPROVINCE_NAME(), p);
+                JSONObject cityData = jsonObject.getJSONObject("cityData");
+                List<City> cities = JSON.parseArray(cityData.getString(p.getPROVINCE_CODE().toString()), City.class);
+                provinceCity.put(p, cities);
             });
+
+            LOG.info(JSON.toJSONString(provinceCity));
             ObservableList<Province> province = FXCollections.observableArrayList(provinces);
             box1.setItems(province);
             box1.getSelectionModel().selectFirst();
@@ -157,18 +165,14 @@ public class Controller implements Initializable {
         }
 
         start = true;
+
         ReadOnlyObjectProperty<Province> property = box1.getSelectionModel().selectedItemProperty();
         Integer provinceCode = property.getValue().getPROVINCE_CODE();
         Integer cityCode = box2.getSelectionModel().selectedItemProperty().getValue().getCITY_CODE();
-        StringBuilder builder = new StringBuilder("https://m.10010.com/NumApp/NumberCenter/qryNum?callback=" +
-                "jsonp_queryMoreNums&provinceCode=");
-        builder.append(provinceCode).append("&cityCode=").append(cityCode).append("&monthFeeLimit=0&groupKey=")
-                .append(proGroupNum.getString(provinceCode.toString())).append("&searchCategory=3&net=01" +
-                "&amounts=200&codeTypeCode=&searchValue=&qryType=02&goodsNet=4&_=");
-        builder.append(System.currentTimeMillis());
-
-        LOG.info(builder.toString());
-        HttpGet get = new HttpGet(builder.toString());
+        String queryUrl = String.format(queryUrlFormat, provinceCode, cityCode, proGroupNum.getString(provinceCode.toString()),
+                System.currentTimeMillis());
+        LOG.info(queryUrl);
+        HttpGet get = new HttpGet(queryUrl);
         get.addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N)" +
                 " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Mobile Safari/537.36");
         get.addHeader("Referer", "https://m.10010.com/queen/tencent/tencent-pc-fill.html" +
@@ -180,6 +184,25 @@ public class Controller implements Initializable {
         service.scheduleWithFixedDelay(() -> {
             while (!start) {
                 return;
+            }
+
+            // 全国搜索
+            if (allCity) {
+                Set<Map.Entry<Province, List<City>>> entries = provinceCity.entrySet();
+                Optional<Map.Entry<Province, List<City>>> any = entries.stream().findAny();
+                Map.Entry<Province, List<City>> provinceListEntry = any.get();
+                Integer province = provinceListEntry.getKey().getPROVINCE_CODE();
+                List<City> cities = provinceListEntry.getValue();
+                Integer city = cities.stream().findAny().get().getCITY_CODE();
+                String url = String.format(queryUrlFormat, province, city, proGroupNum.getString(province.toString()),
+                        System.currentTimeMillis());
+                try {
+                    get.setURI(new URI(url));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                LOG.info(get.getURI().toString());
+
             }
 
             try (CloseableHttpResponse r = httpclient.execute(get)) {
