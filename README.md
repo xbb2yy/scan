@@ -13,14 +13,14 @@
 提取码:uy10
 
 解压，运行里面的scan.ex文件即可。
-git
+
 
 其他使用方式
 环境要求:
 * Git
 * Java 8 及以上运行环境
 * Maven
-* OS X & Linux & Windows
+* OS X || Linux || Windows
 
 ```
 git clone https://github.com/xbb2yy/scan.git
