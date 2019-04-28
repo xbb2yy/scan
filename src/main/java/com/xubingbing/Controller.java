@@ -54,6 +54,7 @@ public class Controller implements Initializable {
     private final String queryUrlFormat = "https://m.10010.com/NumApp/NumberCenter/qryNum?callback=jsonp_queryMoreNums&provinceCode=%s" +
             "&cityCode=%s&monthFeeLimit=0&groupKey=%s&searchCategory=3&net=01&amounts=200&codeTypeCode=&searchValue=&qryType=02&goodsNet=4&_=%s";
 
+    private Random rand = new Random();
     @FXML
     private ChoiceBox<Province> box1;
     @FXML
@@ -185,12 +186,11 @@ public class Controller implements Initializable {
             while (!start) {
                 return;
             }
-
             // 全国搜索
             if (allCity) {
                 Set<Map.Entry<Province, List<City>>> entries = provinceCity.entrySet();
-                Optional<Map.Entry<Province, List<City>>> any = entries.stream().findAny();
-                Map.Entry<Province, List<City>> provinceListEntry = any.get();
+                List<Map.Entry<Province, List<City>>> list = new ArrayList<>(entries);
+                Map.Entry<Province, List<City>> provinceListEntry = list.get(rand.nextInt(list.size()));
                 Integer province = provinceListEntry.getKey().getPROVINCE_CODE();
                 List<City> cities = provinceListEntry.getValue();
                 Integer city = cities.stream().findAny().get().getCITY_CODE();
