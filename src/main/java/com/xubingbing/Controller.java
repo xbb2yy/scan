@@ -67,8 +67,10 @@ public class Controller implements Initializable {
 
     // 任务是否启动
     private static volatile boolean start = true;
+    private static volatile boolean allCity = false;
     private final String wang = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
     private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=1";
+    private final String ali = "https://m.10010.com/king/kingNumCard/alibaoinit?product=1";
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,7 +78,7 @@ public class Controller implements Initializable {
         LOG.info("应用启动");
         // 初始化ListView
         ObservableList<String> items = FXCollections.observableArrayList(
-                "大王卡", "米粉卡", "星粉卡(待开发)");
+                "大王卡", "米粉卡", "阿里宝卡");
         listView.setItems(items);
         listView.getSelectionModel().selectFirst();
 
@@ -137,7 +139,9 @@ public class Controller implements Initializable {
             case "大王卡":
                 groupUrl = wang;
                 break;
-            case "星粉卡":
+            case "阿里宝卡":
+                groupUrl = ali;
+                break;
             case "米粉卡":
                 groupUrl = mi;
                 break;
@@ -177,6 +181,7 @@ public class Controller implements Initializable {
             while (!start) {
                 return;
             }
+
             try (CloseableHttpResponse r = httpclient.execute(get)) {
                 String string = EntityUtils.toString(r.getEntity());
                 StringBuilder sb = new StringBuilder(string);
