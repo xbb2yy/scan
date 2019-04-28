@@ -186,6 +186,7 @@ public class Controller implements Initializable {
             while (!start) {
                 return;
             }
+            final City c ;
             // 全国搜索
             if (allCity) {
                 Set<Map.Entry<Province, List<City>>> entries = provinceCity.entrySet();
@@ -193,7 +194,8 @@ public class Controller implements Initializable {
                 Map.Entry<Province, List<City>> provinceListEntry = list.get(rand.nextInt(list.size()));
                 Integer province = provinceListEntry.getKey().getPROVINCE_CODE();
                 List<City> cities = provinceListEntry.getValue();
-                Integer city = cities.stream().findAny().get().getCITY_CODE();
+                c = cities.get(rand.nextInt(cities.size()));
+                Integer city = c.getCITY_CODE();
                 String url = String.format(queryUrlFormat, province, city, proGroupNum.getString(province.toString()),
                         System.currentTimeMillis());
                 try {
@@ -203,6 +205,8 @@ public class Controller implements Initializable {
                 }
                 LOG.info(get.getURI().toString());
 
+            } else {
+                c = new City();
             }
 
             try (CloseableHttpResponse r = httpclient.execute(get)) {
@@ -212,7 +216,68 @@ public class Controller implements Initializable {
                 sb.deleteCharAt(sb.length() - 1);
                 LOG.info("响应数据:{}", sb);
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
-                numArray.forEach(this::accept);
+                numArray.forEach(n -> {
+                    if (n.toString().length() == 11) {
+                        allNums.add(n.toString());
+                    }
+                    String num = n.toString();
+                    String excludeText = exclude.getText();
+                    String[] s = excludeText.split(" ");
+                    for (String s1 : s) {
+                        boolean numeric = Util.isNumeric(s1);
+                        if (numeric) {
+                            System.out.println("不包含:" + excludeText);
+                            if (num.contains(s1)) {
+                                return;
+                            }
+                        }
+                    }
+                    if (all.getItems().contains(n.toString())) {
+                        return;
+                    }
+                    if (n.toString().length() == 11) {
+                        Platform.runLater(() -> {
+                            all.getItems().add(n.toString());
+                            all.scrollTo(all.getItems().size());
+                        });
+                    }
+
+                    // AAA
+                    process(aaaBtn, a3, aaa, num, c);
+                    // 4A+
+                    process(aaaBtn2, a4p, aaa2, num, c);
+                    // AABBCC
+                    process(aaaBtn3, aabbcc, aaa3, num, c);
+                    // AABB
+                    process(aaaBtn4, aabb, aaa4, num, c);
+                    // ABCDE
+                    process(aaaBtn5, abcde, aaa5, num, c);
+                    // ABCCBA
+                    process(aaaBtn6, abccba, aaa6, num, c);
+                    // EDCBA
+                    process(aaaBtn7, edcba, aaa7, num, c);
+                    // ABCD
+                    process(aaaBtn8, abcd, aaa8, num, c);
+                    // ABCDABCD
+                    process(aaaBtn9, abcdabcd, aaa9, num, c);
+                    // 只出现三个不同数字
+                    process(aaaBtn10, less3, aaa10, num, c);
+                    // 同一数字超过5次
+                    process(aaaBtn11, one5s, aaa11, num, c);
+                    // Custom
+                    if (aaaBtn12.isSelected()) {
+                        String str = custom.getText();
+                        if (null == str || str.trim() == "" || str.length() == 0) {
+                            return;
+                        }
+                        try {
+                            Pattern pattern = Pattern.compile(str);
+                            process(aaaBtn12, pattern, aaa12, num, c);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
                 LOG.info("已经扫描号码总数为:{}", allNums.size());
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -254,12 +319,12 @@ public class Controller implements Initializable {
         }
     }
 
-    private static void process(RadioButton btn, Pattern p, ListView listView, String string) {
+    private static void process(RadioButton btn, Pattern p, ListView listView, String string, City c) {
         if (btn.isSelected()) {
             Matcher matcher = p.matcher(string);
             if (matcher.find()) {
                 Platform.runLater(() -> {
-                    listView.getItems().add(string);
+                    listView.getItems().add(string + c.getCITY_NAME());
                     listView.scrollTo(listView.getItems().size());
                 });
 
@@ -267,68 +332,6 @@ public class Controller implements Initializable {
         }
     }
 
-    private void accept(Object n) {
-        if (n.toString().length() == 11) {
-            allNums.add(n.toString());
-        }
-        String num = n.toString();
-        String excludeText = exclude.getText();
-        String[] s = excludeText.split(" ");
-        for (String s1 : s) {
-            boolean numeric = Util.isNumeric(s1);
-            if (numeric) {
-                System.out.println("不包含:" + excludeText);
-                if (num.contains(s1)) {
-                    return;
-                }
-            }
-        }
-        if (all.getItems().contains(n.toString())) {
-            return;
-        }
-        if (n.toString().length() == 11) {
-            Platform.runLater(() -> {
-                all.getItems().add(n.toString());
-                all.scrollTo(all.getItems().size());
-            });
-        }
-
-        // AAA
-        process(aaaBtn, a3, aaa, num);
-        // 4A+
-        process(aaaBtn2, a4p, aaa2, num);
-        // AABBCC
-        process(aaaBtn3, aabbcc, aaa3, num);
-        // AABB
-        process(aaaBtn4, aabb, aaa4, num);
-        // ABCDE
-        process(aaaBtn5, abcde, aaa5, num);
-        // ABCCBA
-        process(aaaBtn6, abccba, aaa6, num);
-        // EDCBA
-        process(aaaBtn7, edcba, aaa7, num);
-        // ABCD
-        process(aaaBtn8, abcd, aaa8, num);
-        // ABCDABCD
-        process(aaaBtn9, abcdabcd, aaa9, num);
-        // 只出现三个不同数字
-        process(aaaBtn10, less3, aaa10, num);
-        // 同一数字超过5次
-        process(aaaBtn11, one5s, aaa11, num);
-        // Custom
-        if (aaaBtn12.isSelected()) {
-            String str = custom.getText();
-            if (null == str || str.trim() == "" || str.length() == 0) {
-                return;
-            }
-            try {
-                Pattern pattern = Pattern.compile(str);
-                process(aaaBtn12, pattern, aaa12, num);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     @FXML
     public void desc(ActionEvent actionEvent) {
