@@ -23,6 +23,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.IOException;
@@ -41,6 +43,7 @@ import static com.xubingbing.Patterns.*;
 
 public class Controller implements Initializable {
 
+    private final static Logger LOG = LoggerFactory.getLogger(Controller.class);
     static Map<String, Province> provinceMap = new HashMap<>();
     static Map<String, City> cityMap = new HashMap<>();
     private CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -64,20 +67,20 @@ public class Controller implements Initializable {
 
     // 任务是否启动
     private static volatile boolean start = true;
-    private final String uri = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
-    private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=0";
+    private final String wang = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
+    private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=1";
 
 
     public void initialize(URL location, ResourceBundle resources) {
 
         // 初始化ListView
         ObservableList<String> items = FXCollections.observableArrayList(
-                "大王卡", "米粉卡(待开发)", "星粉卡(待开发)");
+                "大王卡", "米粉卡", "星粉卡(待开发)");
         listView.setItems(items);
         listView.getSelectionModel().selectFirst();
 
         // 初始化ChoiceBox
-        HttpGet httpGet = new HttpGet(uri);
+        HttpGet httpGet = new HttpGet(wang);
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             String s = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = JSONObject.parseObject(s);
@@ -117,9 +120,6 @@ public class Controller implements Initializable {
             box2.setItems(FXCollections.observableArrayList(cities));
             box2.getSelectionModel().selectFirst();
 
-            // 请求需要Groupkey
-            proGroupNum = jsonObject.getJSONObject("proGroupNum");
-
             // 初始化提示
             Tooltip tip = new Tooltip("输入数字,多个用空格分隔");
             exclude.setTooltip(tip);
@@ -129,14 +129,26 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void search() {
+    private void search() throws Exception{
         String selectedItem = listView.getSelectionModel().getSelectedItem();
+        String groupUrl = wang;
         switch (selectedItem) {
             case "大王卡":
+                groupUrl = wang;
+                break;
             case "星粉卡":
             case "米粉卡":
+                groupUrl = mi;
                 break;
             default:
+        }
+
+        HttpGet httpGet = new HttpGet(groupUrl);
+        try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
+            String s = EntityUtils.toString(response.getEntity());
+            JSONObject jsonObject = JSONObject.parseObject(s);
+            // 请求需要Groupkey
+            proGroupNum = jsonObject.getJSONObject("proGroupNum");
         }
 
         start = true;
@@ -156,6 +168,8 @@ public class Controller implements Initializable {
                 " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Mobile Safari/537.36");
         get.addHeader("Referer", "https://m.10010.com/queen/tencent/tencent-pc-fill.html" +
                 "?product=4&channel=1306");
+
+        LOG.info("搜索{},省份:{}，城市:{}启动", selectedItem,property.get().getPROVINCE_NAME(), box2.getSelectionModel().selectedItemProperty().get().getCITY_NAME());
 
         service.scheduleWithFixedDelay(() -> {
             while (!start) {
@@ -288,11 +302,9 @@ public class Controller implements Initializable {
 
     @FXML
     public void desc(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setContentText("hello");
-        alert.show();
-        alert.setOnCloseRequest(event ->{
-            alert.close();
-        });
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("1.找到心怡的号码后可以去申请地址，搜索号码后四位.\n2.每天搜索达到一定数量后，可能搜不出任何结果，等一天再试." +
+                "\n3.大王卡支持全国发货,所以在任何地区找到的靓号,都可以申请");
+        alert.showAndWait();
     }
 }
