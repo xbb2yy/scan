@@ -31,38 +31,37 @@ public class MainTest {
     public void abcde() {
         Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
         Matcher matcher = pattern.matcher("123456");
+        assertTrue(matcher.find());
 
         Matcher matcher1 = pattern.matcher("13123454345");
-        System.out.println(matcher1.find());
+        assertTrue(matcher1.find());
 
         Matcher matcher2 = pattern.matcher("122456");
-        System.out.println(matcher2.find());
+        assertFalse(matcher2.find());
 
         Matcher matcher3 = pattern.matcher("1265432");
-        System.out.println(matcher3.find());
+        assertFalse(matcher3 .find());
     }
 
     @Test
     public void edcba() {
         Pattern pattern = Pattern.compile("^\\d(?:(?:0(?=9)|9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){3,})\\d");
         Matcher matcher = pattern.matcher("87654");
-        System.out.println(matcher.find());
+        assertTrue(matcher.find());
 
         Matcher matcher1 = pattern.matcher("13123454345");
-        System.out.println(matcher1.find());
+        assertFalse(matcher1.find());
 
         Matcher matcher2 = pattern.matcher("122456");
-        System.out.println(matcher2.find());
+        assertFalse(matcher2.find());
 
         Matcher matcher3 = pattern.matcher("654321");
-        System.out.println(matcher3.find());
+        assertTrue(matcher3.find());
     }
 
     @Test
     public void abcdabcd() {
         Pattern pattern = Pattern.compile("(\\d)(\\d)(\\d)(\\d)\\1\\2\\3\\4");
-
-
         Matcher matcher = pattern.matcher("153123412343");
         assertTrue(matcher.find());
 
@@ -91,7 +90,7 @@ public class MainTest {
         assertTrue(matcher2.find());
 
         Matcher matcher3 = pattern.matcher("18989898989");
-       assertTrue(matcher3.find());
+        assertTrue(matcher3.find());
     }
 
     @Test
