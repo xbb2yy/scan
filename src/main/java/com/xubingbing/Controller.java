@@ -73,6 +73,7 @@ public class Controller implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
 
+        LOG.info("应用启动");
         // 初始化ListView
         ObservableList<String> items = FXCollections.observableArrayList(
                 "大王卡", "米粉卡", "星粉卡(待开发)");
@@ -162,14 +163,15 @@ public class Controller implements Initializable {
                 "&amounts=200&codeTypeCode=&searchValue=&qryType=02&goodsNet=4&_=");
         builder.append(System.currentTimeMillis());
 
-        System.out.println(builder.toString());
+        LOG.info(builder.toString());
         HttpGet get = new HttpGet(builder.toString());
         get.addHeader("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N)" +
                 " AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Mobile Safari/537.36");
         get.addHeader("Referer", "https://m.10010.com/queen/tencent/tencent-pc-fill.html" +
                 "?product=4&channel=1306");
 
-        LOG.info("搜索{},省份:{}，城市:{}启动", selectedItem,property.get().getPROVINCE_NAME(), box2.getSelectionModel().selectedItemProperty().get().getCITY_NAME());
+        LOG.info("搜索{},省份:{}，城市:{}启动", selectedItem,property.get().getPROVINCE_NAME(), box2.getSelectionModel()
+                .selectedItemProperty().get().getCITY_NAME());
 
         service.scheduleWithFixedDelay(() -> {
             while (!start) {
@@ -180,10 +182,10 @@ public class Controller implements Initializable {
                 StringBuilder sb = new StringBuilder(string);
                 sb.delete(0, 20);
                 sb.deleteCharAt(sb.length() - 1);
-                System.out.println(sb);
+                LOG.info("响应数据:{}", sb);
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
                 numArray.forEach(this::accept);
-                System.out.println(allNums.size());
+                LOG.info("已经扫描号码总数为:{}", allNums.size());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
