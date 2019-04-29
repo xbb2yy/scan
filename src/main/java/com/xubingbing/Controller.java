@@ -223,7 +223,7 @@ public class Controller implements Initializable {
                     for (String s1 : s) {
                         boolean numeric = Util.isNumeric(s1);
                         if (numeric) {
-                            System.out.println("不包含:" + excludeText);
+                            LOG.debug("不包含:{}", excludeText);
                             if (num.contains(s1)) {
                                 return;
                             }
