@@ -224,10 +224,11 @@ public class Controller implements Initializable {
                 LOG.info("响应数据:{}", sb);
                 JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
                 numArray.forEach(n -> {
-                    if (n.toString().length() == 11) {
-                        allNums.add(n.toString());
+                    if (n.toString().length() != 11) {
+                        return;
                     }
                     String num = n.toString();
+                    allNums.add(num);
                     String excludeText = exclude.getText();
                     String[] s = excludeText.split(" ");
                     for (String s1 : s) {
@@ -276,6 +277,8 @@ public class Controller implements Initializable {
                         String str = custom.getText();
                         if (null == str || str.trim() == "" || str.length() == 0) {
                             return;
+
+
                         }
                         try {
                             Pattern pattern = Pattern.compile(str);
@@ -289,7 +292,7 @@ public class Controller implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }, 0, 2, TimeUnit.SECONDS);
+        }, 0, 500, TimeUnit.MILLISECONDS);
 
     }
 
