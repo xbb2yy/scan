@@ -2,7 +2,7 @@
 
 利用JavaFx 开发的一款扫描联通手机靓号的桌面应用，内置多种规则，也可以自定义规则，可以迅速发现靓号。软件每分钟可以发现上千的号码。
 
-![head](/src/main/resources/v1.2.0.png)
+![head](/src/main/resources/v1.0.0.png)
 
 ## 安装使用
 
