@@ -333,7 +333,7 @@ public class Controller implements Initializable {
     public void desc(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("1.找到心怡的号码后可以去申请地址，搜索号码后四位.\n2.每天搜索达到一定数量后，可能搜不出任何结果，等一天再试." +
-                "\n3.大王卡,阿里宝卡支持全国配送,所以在任何地区找到的靓号,都可以申请");
+                "\n3.大王卡,阿里宝卡支持全国配送,所以在任何地区找到的靓号,都可以申请.\n4.通用设置中不包含输入数字，多个用空格分隔，自定义中可以输入数字或者正则");
         alert.showAndWait();
     }
 
