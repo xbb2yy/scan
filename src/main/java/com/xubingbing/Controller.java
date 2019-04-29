@@ -53,8 +53,13 @@ public class Controller implements Initializable {
     private LinkedHashSet<String> allNums = new LinkedHashSet<>();
     private final String queryUrlFormat = "https://m.10010.com/NumApp/NumberCenter/qryNum?callback=jsonp_queryMoreNums&provinceCode=%s" +
             "&cityCode=%s&monthFeeLimit=0&groupKey=%s&searchCategory=3&net=01&amounts=200&codeTypeCode=&searchValue=&qryType=02&goodsNet=4&_=%s";
+    private final static Random rand = new Random();
+    // 任务是否启动
+    private static volatile boolean start = true;
+    private final String wang = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
+    private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=1";
+    private final String ali = "https://m.10010.com/king/kingNumCard/alibaoinit?product=1";
 
-    private Random rand = new Random();
     @FXML
     private ChoiceBox<Province> box1;
     @FXML
@@ -69,15 +74,7 @@ public class Controller implements Initializable {
     @FXML
     private TextField exclude, custom;
 
-    // 任务是否启动
-    private static volatile boolean start = true;
-    private final String wang = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
-    private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=1";
-    private final String ali = "https://m.10010.com/king/kingNumCard/alibaoinit?product=1";
-
-
     public void initialize(URL location, ResourceBundle resources) {
-
         LOG.info("应用启动");
         // 初始化ListView
         ObservableList<String> items = FXCollections.observableArrayList(
@@ -90,7 +87,6 @@ public class Controller implements Initializable {
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             String s = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = JSONObject.parseObject(s);
-
             // 初始化省份
             String provinceData = jsonObject.getString("provinceData");
             box1.setConverter(new ProvinceConverter());
@@ -103,12 +99,10 @@ public class Controller implements Initializable {
             });
             provinces.add(0, new Province("全国", 0));
             provinceMap.put("全国", new Province("全国", 0));
-
             LOG.info(JSON.toJSONString(provinceCity));
             ObservableList<Province> province = FXCollections.observableArrayList(provinces);
             box1.setItems(province);
             box1.getSelectionModel().selectFirst();
-
             // 初始化城市
             box2.setConverter(new CityConverter());
             ChangeListener<Province> changeListener = (ObservableValue<? extends Province> observable, Province oldValue,
@@ -172,9 +166,7 @@ public class Controller implements Initializable {
             // 请求需要Groupkey
             proGroupNum = jsonObject.getJSONObject("proGroupNum");
         }
-
         start = true;
-
         ReadOnlyObjectProperty<Province> property = box1.getSelectionModel().selectedItemProperty();
         Integer provinceCode = property.getValue().getPROVINCE_CODE();
         Integer cityCode = box2.getSelectionModel().selectedItemProperty().getValue().getCITY_CODE();
@@ -315,6 +307,33 @@ public class Controller implements Initializable {
         all.getItems().clear();
     }
 
+    @FXML
+    public void desc(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("1.找到心怡的号码后可以去申请地址，搜索号码后四位.\n2.每天搜索达到一定数量后，可能搜不出任何结果，等一天再试." +
+                "\n3.大王卡,阿里宝卡支持全国配送,所以在任何地区找到的靓号,都可以申请.\n4.通用设置中不包含输入数字，多个用空格分隔，自定义中可以输入数字或者正则");
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void applyWangKa() {
+       openBrowser("https://m.10010.com/queen/tencent/king-tab.html?channel=62&act_type=" +
+               "jXPAuZEJF5sW8RRofWbp9w%3D%3D&id_type=qJKHBMChSUWopNbX1I%2B4Uw%3D%3D&share_id=YqLJGOzSpdTPh0iKvxyVumBT" +
+               "8S%2FA8vXmnAr5A6orOxg%3D&beinvited_id=YqLJGOzSpdTPh0iKvxyVumBT8S%2FA8vXmnAr5A6orOxg%3D");
+    }
+
+    @FXML
+    public void applyBao() {
+       openBrowser("https://m.10010.com/scaffold-show/Alicard");
+    }
+
+    @FXML
+    public void applyMi() {
+        openBrowser("http://m.10010.com/scaffold-show/mifans-zhf?channel=5103&share_id=" +
+                "57636342597964306647494276667153707744356B4136774F665452614644564F753744367468764C75303D&act_type=597" +
+                "14E5770367568415148623453647655656B4E45513D3D&id_type=42797231722F426D492B426F512F526949616B347A513D3D");
+    }
+
     private static void process(RadioButton btn, Pattern p, ListView listView, String string, City c) {
         if (btn.isSelected()) {
             Matcher matcher = p.matcher(string);
@@ -328,45 +347,9 @@ public class Controller implements Initializable {
         }
     }
 
-
-    @FXML
-    public void desc(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("1.找到心怡的号码后可以去申请地址，搜索号码后四位.\n2.每天搜索达到一定数量后，可能搜不出任何结果，等一天再试." +
-                "\n3.大王卡,阿里宝卡支持全国配送,所以在任何地区找到的靓号,都可以申请.\n4.通用设置中不包含输入数字，多个用空格分隔，自定义中可以输入数字或者正则");
-        alert.showAndWait();
-    }
-
-    @FXML
-    public void applyWangKa() {
+    private  static void openBrowser(String url) {
         try {
-            Desktop.getDesktop().browse(new URI("https://m.10010.com/queen/tencent/king-tab.html?channel=62&act_type=" +
-                    "jXPAuZEJF5sW8RRofWbp9w%3D%3D&id_type=qJKHBMChSUWopNbX1I%2B4Uw%3D%3D&share_id=YqLJGOzSpdTPh0iKvxyVumBT" +
-                    "8S%2FA8vXmnAr5A6orOxg%3D&beinvited_id=YqLJGOzSpdTPh0iKvxyVumBT8S%2FA8vXmnAr5A6orOxg%3D"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void applyBao() {
-        try {
-            Desktop.getDesktop().browse(new URI("https://m.10010.com/scaffold-show/Alicard"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void applyMi() {
-        try {
-            Desktop.getDesktop().browse(new URI("http://m.10010.com/scaffold-show/mifans-zhf?channel=5103&share_id=" +
-                    "57636342597964306647494276667153707744356B4136774F665452614644564F753744367468764C75303D&act_type=597" +
-                    "14E5770367568415148623453647655656B4E45513D3D&id_type=42797231722F426D492B426F512F526949616B347A513D3D"));
+            Desktop.getDesktop().browse(new URI(url));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
