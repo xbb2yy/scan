@@ -71,7 +71,6 @@ public class Controller implements Initializable {
 
     // 任务是否启动
     private static volatile boolean start = true;
-    private static volatile boolean allCity = true;
     private final String wang = "https://m.10010.com/king/kingNumCard/init?product=4&channel=1306";
     private final String mi = "https://m.10010.com/king/kingNumCard/newmiinit?product=1";
     private final String ali = "https://m.10010.com/king/kingNumCard/alibaoinit?product=1";
@@ -102,6 +101,8 @@ public class Controller implements Initializable {
                 List<City> cities = JSON.parseArray(cityData.getString(p.getPROVINCE_CODE().toString()), City.class);
                 provinceCity.put(p, cities);
             });
+            provinces.add(0, new Province("全国", 0));
+            provinceMap.put("全国", new Province("全国", 0));
 
             LOG.info(JSON.toJSONString(provinceCity));
             ObservableList<Province> province = FXCollections.observableArrayList(provinces);
@@ -124,8 +125,15 @@ public class Controller implements Initializable {
 
             box1.getSelectionModel().selectedItemProperty().addListener(changeListener);
             Integer code = box1.getSelectionModel().selectedItemProperty().getValue().getPROVINCE_CODE();
-            JSONObject cityData = jsonObject.getJSONObject("cityData");
-            List<City> cities = JSON.parseArray(cityData.getString(code.toString()), City.class);
+            List<City> cities;
+            if (code == 0) {
+                cities = new ArrayList<>();
+                cities.add(new City("全国", 0));
+            } else {
+                JSONObject cityData = jsonObject.getJSONObject("cityData");
+                cities = JSON.parseArray(cityData.getString(code.toString()), City.class);
+            }
+
             cities.forEach(c -> {
                 cityMap.put(c.getCITY_NAME(), c);
             });
@@ -141,7 +149,7 @@ public class Controller implements Initializable {
     }
 
     @FXML
-    private void search() throws Exception{
+    private void search() throws Exception {
         String selectedItem = listView.getSelectionModel().getSelectedItem();
         String groupUrl = wang;
         switch (selectedItem) {
@@ -179,16 +187,16 @@ public class Controller implements Initializable {
         get.addHeader("Referer", "https://m.10010.com/queen/tencent/tencent-pc-fill.html" +
                 "?product=4&channel=1306");
 
-        LOG.info("搜索{},省份:{}，城市:{}启动", selectedItem,property.get().getPROVINCE_NAME(), box2.getSelectionModel()
+        LOG.info("搜索{},省份:{}，城市:{}启动", selectedItem, property.get().getPROVINCE_NAME(), box2.getSelectionModel()
                 .selectedItemProperty().get().getCITY_NAME());
 
         service.scheduleWithFixedDelay(() -> {
             while (!start) {
                 return;
             }
-            final City c ;
-            // 全国搜索
-            if (allCity) {
+            final City c;
+            Integer code = box1.getSelectionModel().selectedItemProperty().get().getPROVINCE_CODE();
+            if(code == 0) {
                 Set<Map.Entry<Province, List<City>>> entries = provinceCity.entrySet();
                 List<Map.Entry<Province, List<City>>> list = new ArrayList<>(entries);
                 Map.Entry<Province, List<City>> provinceListEntry = list.get(rand.nextInt(list.size()));
@@ -204,9 +212,8 @@ public class Controller implements Initializable {
                     e.printStackTrace();
                 }
                 LOG.info(get.getURI().toString());
-
             } else {
-                c = new City();
+                c = box2.getSelectionModel().selectedItemProperty().getValue();
             }
 
             try (CloseableHttpResponse r = httpclient.execute(get)) {
@@ -308,17 +315,6 @@ public class Controller implements Initializable {
         all.getItems().clear();
     }
 
-    @FXML
-    public void applyWangKa(ActionEvent event) {
-        try {
-            Desktop.getDesktop().browse(new URI("http://www.baidu.com"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
     private static void process(RadioButton btn, Pattern p, ListView listView, String string, City c) {
         if (btn.isSelected()) {
             Matcher matcher = p.matcher(string);
@@ -337,7 +333,44 @@ public class Controller implements Initializable {
     public void desc(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("1.找到心怡的号码后可以去申请地址，搜索号码后四位.\n2.每天搜索达到一定数量后，可能搜不出任何结果，等一天再试." +
-                "\n3.大王卡支持全国发货,所以在任何地区找到的靓号,都可以申请");
+                "\n3.大王卡,阿里宝卡支持全国配送,所以在任何地区找到的靓号,都可以申请");
         alert.showAndWait();
+    }
+
+    @FXML
+    public void applyWangKa() {
+        try {
+            Desktop.getDesktop().browse(new URI("https://m.10010.com/queen/tencent/king-tab.html?channel=62&act_type=" +
+                    "jXPAuZEJF5sW8RRofWbp9w%3D%3D&id_type=qJKHBMChSUWopNbX1I%2B4Uw%3D%3D&share_id=YqLJGOzSpdTPh0iKvxyVumBT" +
+                    "8S%2FA8vXmnAr5A6orOxg%3D&beinvited_id=YqLJGOzSpdTPh0iKvxyVumBT8S%2FA8vXmnAr5A6orOxg%3D"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void applyBao() {
+        try {
+            Desktop.getDesktop().browse(new URI("https://m.10010.com/scaffold-show/Alicard"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void applyMi() {
+        try {
+            Desktop.getDesktop().browse(new URI("http://m.10010.com/scaffold-show/mifans-zhf?channel=5103&share_id=" +
+                    "57636342597964306647494276667153707744356B4136774F665452614644564F753744367468764C75303D&act_type=597" +
+                    "14E5770367568415148623453647655656B4E45513D3D&id_type=42797231722F426D492B426F512F526949616B347A513D3D"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 }
