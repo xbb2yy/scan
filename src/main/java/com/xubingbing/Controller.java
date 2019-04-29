@@ -110,9 +110,7 @@ public class Controller implements Initializable {
                 Province p = provinceMap.get(newValue.getPROVINCE_NAME());
                 JSONObject cityData = jsonObject.getJSONObject("cityData");
                 List<City> cities = JSON.parseArray(cityData.getString(p.getPROVINCE_CODE().toString()), City.class);
-                cities.forEach(c -> {
-                    cityMap.put(c.getCITY_NAME(), c);
-                });
+                cities.forEach(c -> cityMap.put(c.getCITY_NAME(), c));
                 box2.setItems(FXCollections.observableArrayList(cities));
                 box2.getSelectionModel().selectFirst();
             };
@@ -203,7 +201,7 @@ public class Controller implements Initializable {
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
-                LOG.info(get.getURI().toString());
+                LOG.debug("号码请求地址:{}", get.getURI().toString());
             } else {
                 c = box2.getSelectionModel().selectedItemProperty().getValue();
             }
