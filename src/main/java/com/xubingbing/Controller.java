@@ -215,13 +215,14 @@ public class Controller implements Initializable {
                 sb.delete(0, 20);
                 sb.deleteCharAt(sb.length() - 1);
                 LOG.info("响应数据:{}", sb);
-                JSONObject object = JSON.parseObject(sb.toString());
-                String status = object.getString("code");
-                if (!Objects.equals(status, "M0")) {
-                    LOG.warn("返回码异常,返回码：{}", status);
+                JSONObject object = null;
+                try {
+                    object = JSON.parseObject(sb.toString());
+                } catch (Exception e) {
+                    LOG.warn("返回码异常,返回数据：{}", string);
                     return;
                 }
-                JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
+                JSONArray numArray = object.getJSONArray("numArray");
                 numArray.forEach(n -> {
                     if (n.toString().length() == 11) {
                         allNums.add(n.toString());
