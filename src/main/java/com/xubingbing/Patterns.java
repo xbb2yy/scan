@@ -2,7 +2,7 @@ package com.xubingbing;
 
 import java.util.regex.Pattern;
 
-final class Patterns {
+final public class Patterns {
     static final Pattern abcdabcd = Pattern.compile("(\\d)(\\d)(\\d)(\\d)\\1\\2\\3\\4");
     static final Pattern aabbcc = Pattern.compile("(\\d)\\1((?!\\1)\\d)\\2((?!\\2)(?!\\1)\\d)\\3");
     static final Pattern abccba = Pattern.compile("(\\d)((?!\\2)\\d)((?!\\2)(?!\\3)\\d)\\3\\2\\1");

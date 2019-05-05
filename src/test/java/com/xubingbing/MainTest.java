@@ -1,3 +1,5 @@
+package com.xubingbing;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,6 +62,22 @@ public class MainTest {
     }
 
     @Test
+    public void huiwen() {
+        Pattern pattern = Pattern.compile("(\\d)(\\d)(\\d)(\\d)(\\d)(\\d)(\\d)\\6\\5\\4\\3\\2\\1");
+        Matcher matcher = pattern.matcher("1234567654321");
+        assertTrue(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("1312341432131");
+      //  assertTrue(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("122456");
+        assertFalse(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("654321");
+        assertFalse(matcher3.find());
+    }
+
+    @Test
     public void abcdabcd() {
         Pattern pattern = Pattern.compile("(\\d)(\\d)(\\d)(\\d)\\1\\2\\3\\4");
         Matcher matcher = pattern.matcher("153123412343");
@@ -77,7 +95,7 @@ public class MainTest {
 
     @Test
     public void unique3() {
-        Pattern pattern = Pattern.compile("^(?=(\\d)\\1*(\\d)(?:\\1|\\2)*(\\d)(?:\\1|\\2|\\3)*$)\\d{11}$");
+        Pattern pattern = Patterns.less3;
 
 
         Matcher matcher = pattern.matcher("153123412343");

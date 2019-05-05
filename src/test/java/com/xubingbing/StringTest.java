@@ -1,3 +1,5 @@
+package com.xubingbing;
+
 import org.junit.Test;
 
 import java.util.HashMap;
