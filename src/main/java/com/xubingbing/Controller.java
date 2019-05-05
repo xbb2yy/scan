@@ -18,8 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -43,7 +41,6 @@ import java.util.regex.Pattern;
 
 import static com.xubingbing.Patterns.*;
 
-@Slf4j
 public class Controller implements Initializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(Controller.class);
@@ -189,7 +186,7 @@ public class Controller implements Initializable {
             }
             final City c;
             Integer code = box1.getSelectionModel().selectedItemProperty().get().getPROVINCE_CODE();
-            if(code == 0) {
+            if (code == 0) {
                 Set<Map.Entry<Province, List<City>>> entries = provinceCity.entrySet();
                 List<Map.Entry<Province, List<City>>> list = new ArrayList<>(entries);
                 Map.Entry<Province, List<City>> provinceListEntry = list.get(rand.nextInt(list.size()));
@@ -289,7 +286,7 @@ public class Controller implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }, 0, 150, TimeUnit.MILLISECONDS);
+        }, 0, 2, TimeUnit.SECONDS);
 
     }
 
@@ -325,14 +322,14 @@ public class Controller implements Initializable {
 
     @FXML
     public void applyWangKa() {
-       openBrowser("https://m.10010.com/queen/tencent/king-tab.html?channel=62&act_type=" +
-               "jXPAuZEJF5sW8RRofWbp9w%3D%3D&id_type=qJKHBMChSUWopNbX1I%2B4Uw%3D%3D&share_id=YqLJGOzSpdTPh0iKvxyVumBT" +
-               "8S%2FA8vXmnAr5A6orOxg%3D&beinvited_id=YqLJGOzSpdTPh0iKvxyVumBT8S%2FA8vXmnAr5A6orOxg%3D");
+        openBrowser("https://m.10010.com/queen/tencent/king-tab.html?channel=62&act_type=" +
+                "jXPAuZEJF5sW8RRofWbp9w%3D%3D&id_type=qJKHBMChSUWopNbX1I%2B4Uw%3D%3D&share_id=YqLJGOzSpdTPh0iKvxyVumBT" +
+                "8S%2FA8vXmnAr5A6orOxg%3D&beinvited_id=YqLJGOzSpdTPh0iKvxyVumBT8S%2FA8vXmnAr5A6orOxg%3D");
     }
 
     @FXML
     public void applyBao() {
-       openBrowser("https://m.10010.com/scaffold-show/Alicard");
+        openBrowser("https://m.10010.com/scaffold-show/Alicard");
     }
 
     @FXML
@@ -355,7 +352,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private  static void openBrowser(String url) {
+    private static void openBrowser(String url) {
         try {
             Desktop.getDesktop().browse(new URI(url));
         } catch (IOException e) {
