@@ -1,6 +1,6 @@
+
 package com.xubingbing;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;
@@ -42,7 +42,7 @@ public class MainTest {
         assertFalse(matcher2.find());
 
         Matcher matcher3 = pattern.matcher("1265432");
-        assertFalse(matcher3 .find());
+        assertFalse(matcher3.find());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class MainTest {
         assertTrue(matcher.find());
 
         Matcher matcher1 = pattern.matcher("1312341432131");
-      //  assertTrue(matcher1.find());
+        assertTrue(matcher1.find());
 
         Matcher matcher2 = pattern.matcher("122456");
         assertFalse(matcher2.find());
@@ -113,16 +113,14 @@ public class MainTest {
 
     @Test
     public void n5() {
-        Pattern pattern = Pattern.compile("^(?=\\d*(\\d)\\d*(?:\\1\\d*){4})\\d{11}$");
-
-
+        Pattern pattern = Patterns.one5s;
         Matcher matcher = pattern.matcher("153123412343");
         assertFalse(matcher.find());
 
         Matcher matcher1 = pattern.matcher("13123452345");
         assertFalse(matcher1.find());
 
-        Matcher matcher2 = pattern.matcher("13133113133");
+        Matcher matcher2 = pattern.matcher("15692666276");
         assertTrue(matcher2.find());
 
         Matcher matcher3 = pattern.matcher("18989898989");
@@ -160,4 +158,10 @@ public class MainTest {
         executorService.shutdown();
         executorService.execute(() -> System.out.println(1));
     }
+
+    @Test
+    public void testExecutor() {
+
+    }
+
 }

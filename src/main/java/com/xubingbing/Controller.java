@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -41,6 +43,7 @@ import java.util.regex.Pattern;
 
 import static com.xubingbing.Patterns.*;
 
+@Slf4j
 public class Controller implements Initializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(Controller.class);
@@ -212,7 +215,14 @@ public class Controller implements Initializable {
                 sb.delete(0, 20);
                 sb.deleteCharAt(sb.length() - 1);
                 LOG.info("响应数据:{}", sb);
-                JSONArray numArray = JSONObject.parseObject(sb.toString()).getJSONArray("numArray");
+                JSONObject object = null;
+                try {
+                    object = JSON.parseObject(sb.toString());
+                } catch (Exception e) {
+                    LOG.warn("返回码异常,返回数据：{}", string);
+                    return;
+                }
+                JSONArray numArray = object.getJSONArray("numArray");
                 numArray.forEach(n -> {
                     if (n.toString().length() == 11) {
                         allNums.add(n.toString());
@@ -279,7 +289,7 @@ public class Controller implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }, 0, 2, TimeUnit.SECONDS);
+        }, 0, 150, TimeUnit.MILLISECONDS);
 
     }
 
