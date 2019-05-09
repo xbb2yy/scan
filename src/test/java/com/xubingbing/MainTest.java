@@ -30,6 +30,31 @@ public class MainTest {
     }
 
     @Test
+    public void testAabb() {
+        Pattern pattern = Patterns.aabb;
+        Matcher matcher = pattern.matcher("13234568877");
+        assertTrue(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("12332");
+        assertFalse(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("18664781199");
+        assertTrue(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("13122550999");
+        assertFalse(matcher3.find());
+
+        Matcher matcher4 = pattern.matcher("18664711199");
+        assertTrue(matcher4.find());
+
+        Matcher matcher5 = pattern.matcher("13234568888");
+        assertTrue(matcher5.find());
+
+        Matcher matche6 = pattern.matcher("1133234568788");
+        assertFalse(matche6.find());
+    }
+
+    @Test
     public void abcde() {
         Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
         Matcher matcher = pattern.matcher("123456");
@@ -160,8 +185,21 @@ public class MainTest {
     }
 
     @Test
-    public void testExecutor() {
+    public void testA3end() {
+        Pattern pattern = Patterns.a3end;
+        Matcher matcher = pattern.matcher("13234567777");
+        assertTrue(matcher.find());
 
+        Matcher matcher1 = pattern.matcher("12332");
+        assertFalse(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("18664781199");
+        assertFalse(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("13162550999");
+        assertTrue(matcher3.find());
+
+        Matcher matcher4 = pattern.matcher("18664711199");
+        assertFalse(matcher4.find());
     }
-
 }

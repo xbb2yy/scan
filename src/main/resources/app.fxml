@@ -123,7 +123,7 @@
                                     <children>
                                         <RadioButton fx:id="aaaBtn" mnemonicParsing="false" selected="true" text="选择" />
                                         <Label fx:id="aaaClear" onMouseClicked="#clear" text="清空" />
-                                        <Label text="AAA">
+                                        <Label text="3A结尾">
                                             <padding>
                                                 <Insets left="10.0" />
                                             </padding>
@@ -180,7 +180,7 @@
                                     <children>
                                         <RadioButton fx:id="aaaBtn4" mnemonicParsing="false" selected="true" text="选择" />
                                         <Label fx:id="aaaClear4" onMouseClicked="#clear" text="清空" />
-                                        <Label text="AABB">
+                                        <Label text="AABB结尾">
                                             <padding>
                                                 <Insets left="10.0" />
                                             </padding>

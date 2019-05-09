@@ -18,6 +18,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.apache.http.HttpHost;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -158,6 +160,11 @@ public class Controller implements Initializable {
         }
 
         HttpGet httpGet = new HttpGet(groupUrl);
+        HttpHost proxy = new HttpHost("80.211.249.27", 8080);
+        RequestConfig config = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000)
+                .setSocketTimeout(10000)
+                .setConnectionRequestTimeout(3000).build();
+        httpGet.setConfig(config);
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             String s = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = JSONObject.parseObject(s);
@@ -246,13 +253,13 @@ public class Controller implements Initializable {
                         });
                     }
 
-                    // AAA
-                    process(aaaBtn, a3, aaa, num, c);
+                    // AAA 结尾
+                    process(aaaBtn, a3end, aaa, num, c);
                     // 4A+
                     process(aaaBtn2, a4p, aaa2, num, c);
                     // AABBCC
                     process(aaaBtn3, aabbcc, aaa3, num, c);
-                    // AABB
+                    // AABB 结尾
                     process(aaaBtn4, aabb, aaa4, num, c);
                     // ABCDE
                     process(aaaBtn5, abcde, aaa5, num, c);
