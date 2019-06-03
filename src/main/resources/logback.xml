@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>/logs/granularity.log</file>
+        <encoder><!-- 必须指定，否则不会往文件输出内容 -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
+        <append>true</append>
+        <prudent>false</prudent>
+    </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
-        </layout>
+        <encoder><!-- 必须指定，否则不会往文件输出内容 -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
+        </encoder>
     </appender>
     <logger name="com.xubingbing" level="INFO"/>
+    <logger name="com.xubingbing.Main" level="INFO">
+        <appender-ref ref="fileAppender" />
+    </logger>
     <root level="warn">
         <appender-ref ref="STDOUT" />
     </root>

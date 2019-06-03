@@ -55,6 +55,23 @@ public class MainTest {
     }
 
     @Test
+    public void abcd() {
+        Pattern pattern = Patterns.abcd;
+        Matcher matcher = pattern.matcher("123456");
+        assertTrue(matcher.find());
+
+        Matcher matcher1 = pattern.matcher("13123454345");
+        assertTrue(matcher1.find());
+
+        Matcher matcher2 = pattern.matcher("122456");
+        assertFalse(matcher2.find());
+
+        Matcher matcher3 = pattern.matcher("1265432");
+        assertFalse(matcher3.find());
+    }
+
+
+    @Test
     public void abcde() {
         Pattern pattern = Pattern.compile("(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)){4}\\d");
         Matcher matcher = pattern.matcher("123456");
@@ -138,17 +155,17 @@ public class MainTest {
 
     @Test
     public void n5() {
-        Pattern pattern = Patterns.one5s;
+        Pattern pattern = Patterns.one6s;
         Matcher matcher = pattern.matcher("153123412343");
         assertFalse(matcher.find());
 
         Matcher matcher1 = pattern.matcher("13123452345");
         assertFalse(matcher1.find());
 
-        Matcher matcher2 = pattern.matcher("15692666276");
+        Matcher matcher2 = pattern.matcher("15692666676");
         assertTrue(matcher2.find());
 
-        Matcher matcher3 = pattern.matcher("18989898989");
+        Matcher matcher3 = pattern.matcher("18989898988");
         assertTrue(matcher3.find());
 
         Matcher matcher4 = pattern.matcher("15313332339");

@@ -317,7 +317,7 @@
                                     <children>
                                         <RadioButton fx:id="aaaBtn11" mnemonicParsing="false" selected="true" text="选择" />
                                         <Label fx:id="aaaClear51" onMouseClicked="#clear" text="清空" />
-                                        <Label text="同一数字超过5次">
+                                        <Label text="同一数字超过6次">
                                             <padding>
                                                 <Insets left="10.0" />
                                             </padding>

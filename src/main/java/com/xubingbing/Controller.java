@@ -164,7 +164,7 @@ public class Controller implements Initializable {
         RequestConfig config = RequestConfig.custom().setProxy(proxy).setConnectTimeout(10000)
                 .setSocketTimeout(10000)
                 .setConnectionRequestTimeout(3000).build();
-        httpGet.setConfig(config);
+       // httpGet.setConfig(config);
         try (CloseableHttpResponse response = httpclient.execute(httpGet)) {
             String s = EntityUtils.toString(response.getEntity());
             JSONObject jsonObject = JSONObject.parseObject(s);
@@ -273,8 +273,8 @@ public class Controller implements Initializable {
                     process(aaaBtn9, abcdabcd, aaa9, num, c);
                     // 只出现三个不同数字
                     process(aaaBtn10, less3, aaa10, num, c);
-                    // 同一数字超过5次
-                    process(aaaBtn11, one5s, aaa11, num, c);
+                    // 同一数字超过6次
+                    process(aaaBtn11, one6s, aaa11, num, c);
                     // Custom
                     if (aaaBtn12.isSelected()) {
                         String str = custom.getText();
@@ -293,7 +293,7 @@ public class Controller implements Initializable {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-        }, 0, 2, TimeUnit.SECONDS);
+        }, 0, 150, TimeUnit.MILLISECONDS);
 
     }
 
